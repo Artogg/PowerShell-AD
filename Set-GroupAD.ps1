@@ -7,7 +7,7 @@ Le nom du groupe a creer, sans les suffixes/prefixes custom
 Le type du groupe a creer, accepter "ct", "ls" ou "ctls" ou "lsct" (Controle Total, Lecture Seule ou les deux groupes)
 .EXAMPLE
 Set-GroupAD.ps1 mongroupe ct
-Set-GroupeAD.ps1 -NomGroup mongroupe -TypeGroupe ctls
+Set-GroupeAD.ps1 -NomGroup mongroupe -TypeGroup ctls
 #>
 
 
@@ -35,21 +35,21 @@ Process{
     if(($TypeGroup.length -ge 2) -and ($TypeGroup.length -le 4) -and ($TypeGroup.length -ne 3)){
         if ($TypeGroup -like "*ct*"){
             #Formate le nom du groupe en ajoutant les prefixes / suffixes pour les groupes locaux/globaux
-            $GL = "le $nom_groupe et les suffixes/prefixes"
-            $GG = "le $nom_groupe et les suffixes/prefixes"
+            $GL = "le $NomGroupe et les suffixes/prefixes"
+            $GG = "le $NomGroupe et les suffixes/prefixes"
             #Creer les groupes local/global
-            New-ADGroup $GL -Path "OU=,OU=,OU=,DC=,DC=" -GroupCategory "Security" -GroupScope "DomainLocal" -description "Groupe Local $nom_groupe"
-            New-ADGroup $GG -Path "OU=,OU=,OU=,DC=,DC=" -GroupCategory "Security" -GroupScope "Global" -description "Groupe Global $nom_groupe" 
+            New-ADGroup $GL -Path "OU=,OU=,OU=,DC=,DC=" -GroupCategory "Security" -GroupScope "DomainLocal" -description "Groupe Local $NomGroupe"
+            New-ADGroup $GG -Path "OU=,OU=,OU=,DC=,DC=" -GroupCategory "Security" -GroupScope "Global" -description "Groupe Global $NomGroupe" 
 
             #Ajoute le groupe global en membre du groupe local
             Add-ADGroupMember -Identity $GL -Members $GG
         } elseif ($TypeGroup -like "*ls*"){
             #Formate le nom du groupe en ajoutant les prefixes / suffixes
-            $GLLS = "le $nom_groupe et les suffixes/prefixes"
-            $GGLS = "le $nom_groupe et les suffixes/prefixes"
+            $GLLS = "le $NomGroupe et les suffixes/prefixes"
+            $GGLS = "le $NomGroupe et les suffixes/prefixes"
             #Creer les groupes local/global pour la LS
-            New-ADGroup $GLLS -Path "OU=,OU=,OU=,DC=,DC="-GroupCategory "Security" -GroupScope "DomainLocal" -description "Groupe Local $nom_groupe => LS"
-            New-ADGroup $GGLS -Path "OU=,OU=,OU=,DC=,DC=" -GroupCategory "Security" -GroupScope "Global" -description "Groupe Global $nom_groupe => LS" 
+            New-ADGroup $GLLS -Path "OU=,OU=,OU=,DC=,DC="-GroupCategory "Security" -GroupScope "DomainLocal" -description "Groupe Local $NomGroupe => LS"
+            New-ADGroup $GGLS -Path "OU=,OU=,OU=,DC=,DC=" -GroupCategory "Security" -GroupScope "Global" -description "Groupe Global $NomGroupe => LS" 
 
             #Ajoute le groupe global en membre du groupe local
             Add-ADGroupMember -Identity $GLLS -Members $GGLS
