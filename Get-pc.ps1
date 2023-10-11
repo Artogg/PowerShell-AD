@@ -1,6 +1,6 @@
 ﻿<#
 .DESCRIPTION
-Script pour rechercher les informations reseaux liees a un ou des PMF (DHCP, DNS, MAC) via son nom de machine.
+Script pour rechercher les informations reseaux liees a un ou des PC (DHCP, DNS, MAC) via son nom de machine.
 .PARAMETER poste
 Le nom de la/les machines / poste.
 On peut lister les machines en les separants par une virgule (SANS ESPACE)
